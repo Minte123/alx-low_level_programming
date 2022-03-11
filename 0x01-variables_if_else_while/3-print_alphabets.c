@@ -11,7 +11,6 @@
 int main(void)
 {
 	int i, n;
-	
 	    i = 97;
 	    n = 65;
 
@@ -20,7 +19,6 @@ int main(void)
 		putchar(i);
 		i++;
 	}
-	
 	while (n < 91)
 	{
 		putchar(n);
