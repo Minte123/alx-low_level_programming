@@ -1,23 +1,21 @@
-#include"main.h"
+#include "main.h"
+
 /**
  * main -Entry point
  *
- * print_alphabet
+ * print_alphabet.
  *
- * Return 0 Always Successe
+ * Return null
  */
-
 void print_alphabet(void)
 {
-	char letter;
-
-        letter = 'a';
-
-	while (letter <= 'z')
-	{
-		_putchar(letter);
-		letter++;
-	}
-	_putchar('\n');
+char let;
+let = 'a';
+while (let <= 'z')
+{
+_putchar(let);
+let++;
+}
+_putchar('\n');
 }
 
