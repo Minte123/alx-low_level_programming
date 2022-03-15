@@ -4,9 +4,8 @@
  * Return 0 Always Successe
  *
  */
-main()
+void print_alphabet(void)
 {
-void print_alphabet(void);
 
 char c1;
 
@@ -14,8 +13,8 @@ c1 = 97;
 
 for(c1 = 97; c1 <= 122; c1++)
 {
-	_putchar('%c \n');
+	_putchar('c1');
 }
-return 0;
+_putchar('\n');
 }
 
