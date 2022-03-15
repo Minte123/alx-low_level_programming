@@ -1,21 +1,20 @@
 #include "main.h"
 
 /**
- * main -Entry point
+ * print_alphabet - print alphabet
  *
- * print_alphabet.
- *
- * Return null
+ * Return: void
  */
+
 void print_alphabet(void)
 {
-char let;
-let = 'a';
-while (let <= 'z')
-{
-_putchar(let);
-let++;
-}
-_putchar('\n');
+	char letter = 'a';
+
+	while (letter <= 'z')
+	{
+		_putchar(letter);
+		letter++;
+	}
+	_putchar('\n');
 }
 
