@@ -1,9 +1,12 @@
 #include"main.h"
-/* main -Entry point
+/**
+ * main -Entry point
+ *
+ * print_alphabet
  *
  * Return 0 Always Successe
- *
  */
+
 void print_alphabet(void)
 {
 	char letter = 'a';
