@@ -1,29 +1,31 @@
 #include "main.h"
 
 /**
- * cap_string - capitalizes all words of a string
- * @s: string to capitalize
- * Return: string;
- */
+* *leet - a function that encodes a string into 1337
+* @str: string
+* Return: string
+**/
 
-char *cap_string(char *s)
+char *leet(char *str)
 {
-	int i = 1;
+	int i, j;
 
-	if (s[0] >= 'a' && s[0] <= 'z')
+	char s[] = "a4e3o0t7l1";
+
+	i = 0;
+	j = 0;
+
+	while (str[i] != '\0')
 	{
-		s[0] = s[0] - 32;
-	}
-	for (; s[i]; i++)
-	{
-		if ((s[i - 1] == ' ' || s[i - 1] == '\n' || s[i - 1] == '\t'
-		    || s[i - 1] == ',' || s[i - 1] == ';' || s[i - 1] == '!'
-		    || s[i - 1] == '?' || s[i - 1] == '"' || s[i - 1] == '('
-		     || s[i - 1] == ')' || s[i - 1] == '{' || s[i - 1] == '}'
-		     || s[i - 1] == '.') && (s[i] > 'a' && s[i] < 'z'))
+		for (j = 0; j < 10; j += 2)
 		{
-			s[i] = s[i] - 32;
+			if (str[i] == s[j] || str[i] == s[j] - 32)
+			{
+				str[i] = s[j + 1];
+				break;
+			}
 		}
+		i++;
 	}
-	return (s);
+	return (str);
 }
