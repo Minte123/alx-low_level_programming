@@ -1,28 +1,29 @@
 #include "main.h"
 
 /**
- * leet - function that encodes a string into 1337
- * @s: string array
- * Return: string array
+ * cap_string - capitalizes all words of a string
+ * @s: string to capitalize
+ * Return: string;
  */
 
-char *leet(char *s)
+char *cap_string(char *s)
 {
-	int i;
+	int i = 1;
 
-	for (i = 0; s[i] != '\0'; i++)
+	if (s[0] >= 'a' && s[0] <= 'z')
 	{
-		if (s[i] == 'a' || s[i] == 'A')
-			s[i] = '4';
-		if (s[i] == 'e' || s[i] == 'E')
-			s[i] = '3';
-		if (s[i] == 'o' || s[i] == 'O')
-			s[i] = '0';
-		if (s[i] == 't' || s[i] == 'T')
-			s[i] = '7';
-		if (s[i] == 'l' || s[i] == 'L')
-			s[i] = '1';
+		s[0] = s[0] - 32;
 	}
-
+	for (; s[i]; i++)
+	{
+		if ((s[i - 1] == ' ' || s[i - 1] == '\n' || s[i - 1] == '\t'
+		    || s[i - 1] == ',' || s[i - 1] == ';' || s[i - 1] == '!'
+		    || s[i - 1] == '?' || s[i - 1] == '"' || s[i - 1] == '('
+		     || s[i - 1] == ')' || s[i - 1] == '{' || s[i - 1] == '}'
+		     || s[i - 1] == '.') && (s[i] > 'a' && s[i] < 'z'))
+		{
+			s[i] = s[i] - 32;
+		}
+	}
 	return (s);
 }
