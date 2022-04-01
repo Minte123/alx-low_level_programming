@@ -1,24 +1,15 @@
 #include "main.h"
-#include <stdio.h>
+
 /**
- * *_strcat - concatenates(links), two strings.
- * @dest: destination variable.
- * @src: source variable.
+ * _isdigit - checks for digithood
+ * @c: character to checked for digit membership
  *
- * Return: dest
+ * Return: 1 if digit, 0 if not digit
  */
 
-char *_strcat(char *dest, char *src)
+int _isdigit(int c)
 {
-	int index, index2;
-
-	for (index = 0; dest[index] != '\0'; index++)
-		;
-
-	for (index2 = 0; src[index2] != '\0'; index2++)
-	{
-		dest[index] = src[index2];
-		index++;
-	}
-	return (dest);
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
 }
