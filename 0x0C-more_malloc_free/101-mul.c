@@ -1,225 +1,126 @@
-#include <stdio.h>
+#include "main.h"
 #include <stdlib.h>
-
-int _strlen(char *s);
-char *xarray(int size);
-char *_zero_iteration(char *s);
-int convert_to_digit(char s);
-void _product(char *prod, char *mul, int digit, int zeroes);
-void nums_add(char *final_prod, char *next_prod, int next_len);
+#include <stdio.h>
+#include <ctype.h>
 
 /**
- *_strlen - length of string
+ * _is_zero - determines if any number is zero
+ * @argv: argument vector.
  *
- *@s:string
- *
- *Return:string length
- *
+ * Return: no return.
  */
-int _strlen(char *s)
+void _is_zero(char *argv[])
 {
-	int i;
+	int i, isn1 = 1, isn2 = 1;
 
-	for (i = 0; s[i] != '\0'; i++)
-		;
-	return (i);
+	for (i = 0; argv[1][i]; i++)
+		if (argv[1][i] != '0')
+		{
+			isn1 = 0;
+			break;
+		}
+
+	for (i = 0; argv[2][i]; i++)
+		if (argv[2][i] != '0')
+		{
+			isn2 = 0;
+			break;
+		}
+
+	if (isn1 == 1 || isn2 == 1)
+	{
+		printf("0\n");
+		exit(0);
+	}
 }
-/**
- *xarray - creates an array and initializes its value to x plus terminating
- *null byte
- *@size:size of array to be initialised
- *Return:pointer to array
- */
-char *xarray(int size)
-{
-	int i;
-	char *arr;
 
-	arr = malloc(sizeof(char) * size);
-	if (arr == NULL)
-	{
-		exit(98);
-	}
-	for (i = 0; i < (size - 1); i++)
-	{
-		arr[i] = 'x';
-	}
-	arr[i] = '\0';
-	return (arr);
+/**
+ * _initialize_array - set memery to zero in a new array
+ * @ar: char array.
+ * @lar: length of the char array.
+ *
+ * Return: pointer of a char array.
+ */
+char *_initialize_array(char *ar, int lar)
+{
+	int i = 0;
+
+	for (i = 0; i < lar; i++)
+		ar[i] = '0';
+	ar[lar] = '\0';
+	return (ar);
 }
+
 /**
- *_zero_iteration - iterates thru a given no. of zeroes
+ * _checknum - determines length of the number
+ * and checks if number is in base 10.
+ * @argv: arguments vector.
+ * @n: row of the array.
  *
- *@s:string to be iterated
- *Return:pointer to next non-zero element
+ * Return: length of the number.
  */
-char *_zero_iteration(char *s)
+int _checknum(char *argv[], int n)
 {
-	while (*s && *s == '0')
-	{
-		s++;
-	}
-	return (s);
-}
-/**
- *convert_to_digit - converts digit character to int
- *
- *@s:digit character
- *
- *Return:converted int
- *
- */
-int convert_to_digit(char s)
-{
-	int digit = s - '0';
+	int ln;
 
-	if (digit < 0 || digit > 9)
-	{
-		printf("Error\n");
-		exit(98);
-	}
-	return (digit);
-}
-/**
- *_product - multiplies string of numbers by a single digit
- *
- *@prod:buffer to store result
- *@mul:string of no.
- *@digit:single digit
- *@zeroes:leading zeroes
- *
- *Return:void
- */
-void _product(char *prod, char *mul, int digit, int zeroes)
-{
-	int mul_len, num, tens = 0;
-
-	mul_len = _strlen(mul) - 1;
-	mul += mul_len;
-
-	while (*prod)
-	{
-		*prod = 'x';
-		prod++;
-	}
-	prod--;
-
-	while (zeroes--)
-	{
-		*prod = '0';
-		prod--;
-	}
-	for (; mul_len >= 0; mul_len--, prod--, mul--)
-	{
-		if (*mul < '0' || *mul > '9')
+	for (ln = 0; argv[n][ln]; ln++)
+		if (!isdigit(argv[n][ln]))
 		{
 			printf("Error\n");
 			exit(98);
 		}
-		num = (*mul - '0') * digit;
-		num += tens;
-		*prod = (num % 10) + '0';
-		tens = num / 10;
-	}
-	if (tens)
-	{
-		*prod = (tens % 10) + '0';
-	}
-}
-/**
- *nums_add - adds numbers stored in two strings
- *
- *@final_prod:final product buffer
- *@next_prod :next product to be added
- *@next_len:length of next prod
- *
- *Return:void
- */
-void nums_add(char *final_prod, char *next_prod, int next_len)
-{
-	int num, tens;
 
-	tens = 0;
-	while (*(final_prod + 1))
-	{
-		final_prod++;
-	}
-	while (*(next_prod + 1))
-	{
-		next_prod++;
-	}
-	for (; *final_prod != 'x'; final_prod--)
-	{
-		num = (*final_prod - '0') + (*next_prod - '0');
-		num += tens;
-		*final_prod = (num % 10) + '0';
-		tens = num / 10;
-		next_prod--;
-		next_len--;
-	}
-	for (; next_len >= 0 && *next_prod != 'x'; next_len--)
-	{
-		num = (*next_prod - '0');
-		num += tens;
-		*final_prod = (num % 10) + '0';
-		tens = num / 10;
-		final_prod--;
-		next_prod--;
-	}
-	if (tens)
-	{
-		*final_prod = (tens % 10) + '0';
-	}
+	return (ln);
 }
+
 /**
- *main - multiplies two positive numbers and prints the result
+ * main - Entry point.
+ * program that multiplies two positive numbers.
+ * @argc: number of arguments.
+ * @argv: arguments vector.
  *
- *@argc:arguement count
- *@argv:arguement vector
- *Return:(0- success)
+ * Return: 0 - success.
  */
 int main(int argc, char *argv[])
 {
-	char *final_prod, *next_prod;
-	int i, size, digit, zeroes = 0;
+	int ln1, ln2, lnout, add, addl, i, j, k, ca;
+	char *nout;
 
 	if (argc != 3)
+		printf("Error\n"), exit(98);
+	ln1 = _checknum(argv, 1), ln2 = _checknum(argv, 2);
+	_is_zero(argv), lnout = ln1 + ln2, nout = malloc(lnout + 1);
+	if (nout == NULL)
+		printf("Error\n"), exit(98);
+	nout = _initialize_array(nout, lnout);
+	k = lnout - 1, i = ln1 - 1, j = ln2 - 1, ca = addl = 0;
+	for (; k >= 0; k--, i--)
 	{
-		printf("Error\n");
-		exit(98);
-	}
-	if (*(argv[1]) == '0')
-	{
-		argv[1] = _zero_iteration(argv[1]);
-	}
-	if (*(argv[2]) == '0')
-	{
-		argv[2] = _zero_iteration(argv[2]);
-	}
-	if (*(argv[1]) == '\0' || *(argv[2]) == '\0')
-	{
-		printf("0\n");
-		return (0);
-	}
-	size = _strlen(argv[1]) + _strlen(argv[2]);
-	final_prod = xarray(size + 1);
-	next_prod = xarray(size + 1);
-
-	for (i = _strlen(argv[2]) - 1; i >= 0; i--)
-	{
-		digit = convert_to_digit(*(argv[2] + i));
-		_product(next_prod, argv[1], digit, zeroes++);
-		nums_add(final_prod, next_prod, size - 1);
-	}
-	for (i = 0; final_prod[i]; i++)
-	{
-		if (final_prod[i] != 'x')
+		if (i < 0)
 		{
-			putchar(final_prod[i]);
+			if (addl > 0)
+			{
+				add = (nout[k] - '0') + addl;
+				if (add > 9)
+					nout[k - 1] = (add / 10) + '0';
+				nout[k] = (add % 10) + '0';
+			}
+			i = ln1 - 1, j--, addl = 0, ca++, k = lnout - (1 + ca);
+		}
+		if (j < 0)
+		{
+			if (nout[0] != '0')
+				break;
+			lnout--;
+			free(nout), nout = malloc(lnout + 1), nout = _initialize_array(nout, lnout);
+			k = lnout - 1, i = ln1 - 1, j = ln2 - 1, ca = addl = 0;
+		}
+		if (j >= 0)
+		{
+			add = ((argv[1][i] - '0') * (argv[2][j] - '0')) + (nout[k] - '0') + addl;
+			addl = add / 10, nout[k] = (add % 10) + '0';
 		}
 	}
-	putchar('\n');
-	free(next_prod);
-	free(final_prod);
+	printf("%s\n", nout);
 	return (0);
 }
