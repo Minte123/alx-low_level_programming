@@ -1,41 +1,39 @@
-#include "mian.h"
+#include "main.h"
 
 /**
- * read_textfile - reads a text file and prints it to standard output
- * @filename: name of the file
- * @letters: number of letters
- * Return: if success return number of letter, else return 0
+ * read_textfile - Read a text file and print to POSIX stdout
+ * @filename: char string of files name
+ * @letters: number of letters to read and print
+ * Return: number of letters read and printed, or 0 if error
  */
-
 ssize_t read_textfile(const char *filename, size_t letters)
 {
 	int fd;
+	ssize_t rcount, wcount;
 	char *buffer;
-	ssize_t bytes_read, bytes_written;
 
 	if (filename == NULL)
 		return (0);
 
-	fd = open(filename, O_RDONLY);
+	fd = open(filename, O_RDWR);
 	if (fd == -1)
 		return (0);
 
-	buffer = malloc(sizeof(char) * letters + 1);
+	buffer = malloc(sizeof(char) * letters);
 	if (buffer == NULL)
+	{
+		free(buffer);
+		return (0);
+	}
+	rcount = read(fd, buffer, letters);
+	if (rcount == -1)
 		return (0);
 
-	bytes_read = read(fd, buffer, letters);
-	if (bytes_read == -1)
+	wcount = write(STDOUT_FILENO, buffer, rcount);
+	if (wcount == -1 || rcount != wcount)
 		return (0);
-
-	buffer[letters + 1] = '\0';
-	close(fd);
-
-	bytes_written = write(STDOUT_FILENO, buffer, bytes_read);
-	if (bytes_written == -1)
-		return (0);
-
 	free(buffer);
 
-	return (bytes_read);
+	close(fd);
+	return (wcount);
 }
