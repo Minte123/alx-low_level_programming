@@ -1,8 +1,3 @@
-/*
- * File: 6-hash_table_delete.c
- * Auth: Asrat Asmelash
-*/
-
 #include "hash_tables.h"
 
 /**
